@@ -15,7 +15,7 @@
 
 <body>
     <input type="text" id="guess"/>
-    <h1 id="numberOfRemainingGuesses">10</h1>
+    <h1 id="numberOfRemainingGuesses"></h1>
     <button onclick="guessNumber()" id="guess-btn">
         Guess!
     </button>
@@ -23,10 +23,12 @@
       Guess Again!
     </button>
 
-    <div class="alert alert-danger" role="alert" style="visibility: hidden" id="wrongGuess">
-        Your guess was wrong!
+    <div class="alert alert-danger" role="alert" style="visibility: hidden" id="guessTooSmallError">
+        Your guess was wrong! Your guess is too small
     </div>
-
+    <div class="alert alert-danger" role="alert" style="visibility: hidden" id="guessTooBigError">
+      Your guess was wrong! Your guess is too big
+    </div>
     <div class="alert alert-success" role="alert" style="visibility: hidden" id="correctGuess">
             You're Correct! You guessed, correctly!
     </div>

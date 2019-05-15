@@ -15,44 +15,49 @@
 
 </head>
 
-<body>
-  <section class="container">
-    <div>
-      <h1>Turns left</h1>
-
-      <h1 id="numberOfRemainingGuesses"></h1>
-
-    </div>
-    
+<body class="bg mt-5 pt-5" style="background-image: url(img/1.jpeg); height: 100%; background-position: center; background-repeat: no-repeat;background-size: cover;">
+  <section class="container pt-3" style="background-color: black; opacity: 0.9; background: white; border-radius: 15px;">
     <div class="container">
-      <input type="text" id="guess" />
-      <button onclick="checkGuess()" id="guess-btn">
-        Guess!
-      </button>
-      <button onclick="newGame()" id="btn_new_game">
-        New Game!
-      </button>
-    </div>
-    <div class="container ">
-      <div class="alert alert-danger d-flex justify-content-center" role="alert" style="visibility: hidden"
-        id="guessTooSmallError">
-        Your guess was wrong! Your guess is too small
+      <div class="row">
+        <div class=col-8>
+          <div class="container d-flex justify-content-center">
+            <input type="text" id="guess" />
+            <button onclick="checkGuess()" id="guess-btn">
+              Guess!
+            </button>
+            <button onclick="newGame()" id="btn_new_game">
+              New Game!
+            </button>
+          </div>
+          <div class="container messages">
+            <div class="alert alert-danger d-flex justify-content-center" role="alert" style="visibility: hidden" id="guessTooSmallError">
+              What a noob! Your guess is too small!
+            </div>
+            <div class="alert alert-danger d-flex justify-content-center" role="alert" style="visibility: hidden" id="guessTooBigError">
+              What a noob! Your guess is too big!
+            </div>
+            <div class="alert alert-success d-flex justify-content-center" role="alert" style="visibility: hidden" id="correctGuess">
+              Finally! You guessed correctly!
+            </div>
+            <div class="alert alert-danger d-flex justify-content-center" role="alert" style="visibility: hidden" id="game-over-div">
+              YOU BETTER QUIT
+            </div>
+          </div>
+        </div>
+        <div class="col-4">
+          <div>
+            <h1>Turns left:</h1>
+            <h1 id="numberOfRemainingGuesses"></h1>
+          </div>
+          <h2>Your guess history:</h2>
+          <div >
+            <h2 id="array">
+
+            </h2>
+
+          </div>
+        </div>
       </div>
-      <div class="alert alert-danger d-flex justify-content-center" role="alert" style="visibility: hidden"
-        id="guessTooBigError">
-        Your guess was wrong! Your guess is too big
-      </div>
-      <div class="alert alert-success d-flex justify-content-center" role="alert" style="visibility: hidden"
-        id="correctGuess">
-        You're Correct! You guessed, correctly!
-      </div>
-      <div class="alert alert-danger d-flex justify-content-center" role="alert" style="visibility: hidden"
-        id="game-over-div">
-        GAME OVER!
-      </div>
-    </div>
-    <div id="array">
-      this is an array
     </div>
   </section>
   <script src="js/scripts.js"></script>

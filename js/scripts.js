@@ -12,12 +12,13 @@ function newGame() {
   console.log("random " + generatedRandomNumber)
   document.getElementById('numberOfRemainingGuesses').innerHTML = numberOfAvailableGuesses;
   document.getElementById("guess-btn").disabled = false
+  document.getElementById("guess").disabled = false
   document.getElementById("guess-btn").style.visibility = "visible"
-  document.getElementById('guessTooSmallError').style.visibility = 'visible'
-  document.getElementById('guessTooBigError').style.visibility = 'visible'
-  document.getElementById('correctGuess').style.visibility = 'visible'
-  document.getElementById("btn_new_game").style.visibility = "visible"
-  document.getElementById("game-over-div").style.visibility = "visible"
+  document.getElementById('guessTooSmallError').style.visibility = 'hidden'
+  document.getElementById('guessTooBigError').style.visibility = 'hidden'
+  document.getElementById('correctGuess').style.visibility = 'hidden'
+  document.getElementById("btn_new_game").style.visibility = "hidden"
+  document.getElementById("game-over-div").style.visibility = "hidden"
   array = []
   document.getElementById('array').innerHTML = "";
 }
@@ -26,9 +27,7 @@ function checkGuess() {
   let guessValue = document.getElementById("guess").value
   array.push(guessValue);
   document.getElementById('array').innerHTML = array;
-
-  console.log("array" + array)
-  console.log("guessvalue " + guessValue.toString() + "randomnumber" + generatedRandomNumber)
+  console.log("guessvalue " + guessValue.toString() + " randomnumber " + generatedRandomNumber)
   if (numberOfAvailableGuesses === 1 && guessValue !== generatedRandomNumber) {
     updateUiGameOver()
   } else {
@@ -49,6 +48,7 @@ function updateUiGameOver() {
   document.getElementById('numberOfRemainingGuesses').innerHTML = 0
   document.getElementById("game-over-div").style.visibility = "visible"
   document.getElementById("guess-btn").disabled = true
+  document.getElementById("guess").disabled = true
   document.getElementById("btn_new_game").style.visibility = "visible"
 
 }
@@ -56,6 +56,7 @@ function updateUiGameOver() {
 function updateUiWinner() {
   document.getElementById("btn_new_game").style.visibility = "visible"
   document.getElementById('correctGuess').style.visibility = 'visible'
+  document.getElementById("guess").disabled = true
   document.getElementById("guess-btn").disabled = true
 }
 

@@ -4,11 +4,11 @@
 <head>
   <meta charset="utf-8">
 
-  <title>The HTML5 Herald</title>
+  <title>Number Guessing Game</title>
   <meta name="description" content="The HTML5 Herald">
   <meta name="author" content="SitePoint">
 
-  <link rel="stylesheet" href="css/styles.css?v=1.0">
+  <!-- <link rel="stylesheet" href="css/styles.css?v=1.0"> -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
 </head>
@@ -16,8 +16,11 @@
 <body>
     <input type="text" id="guess"/>
     <h1 id="numberOfRemainingGuesses">10</h1>
-    <button onclick="guessNumber()">
+    <button onclick="guessNumber()" id="guess-btn">
         Guess!
+    </button>
+    <button onclick="guessAgain()" style="visibility: hidden" id="guessAgain-btn">
+      Guess Again!
     </button>
 
     <div class="alert alert-danger" role="alert" style="visibility: hidden" id="wrongGuess">
@@ -27,8 +30,8 @@
     <div class="alert alert-success" role="alert" style="visibility: hidden" id="correctGuess">
             You're Correct! You guessed, correctly!
     </div>
-    <button onclick="resetGame()">
-        Reset Game!
+    <button onclick="newGame()">
+        New Game!
     </button>
 
   <script src="js/scripts.js"></script>

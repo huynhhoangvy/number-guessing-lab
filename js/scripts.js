@@ -1,75 +1,66 @@
-const DEFAULT_GUESSES =10
+const DEFAULT_GUESSES = 10
 let numberOfAvailableGuesses = DEFAULT_GUESSES
 document.getElementById("numberOfRemainingGuesses").innerHTML = numberOfAvailableGuesses;
 let generatedRandomNumber
+let array = []
 
+newGame()
 
-function guessNumber() {
-  if (numberOfAvailableGuesses  === 0 ) {
-    newGame();
-    return;
-  }
-  generatedRandomNumber = Math.floor(Math.random() *100);
-  console.log(generatedRandomNumber)
-  // if (guess < generatedRandomNumber) {
-  //   document.getElementById('wrongGuess').style.visibility = 'visible'
-  // }else if (guess > generatedRandomNumber) {
-  //   document.getElementById('wrongGuess').style.visibility = 'visible'
-  // }else {
-  //   document.getElementById('correctGuess').style.visibility = 'visible'
-  //   newGame();
-  // return;
-  // }
-  document.getElementById("guess-btn").style.visibility = "hidden"
-  document.getElementById("guessAgain-btn").style.visibility = "visible"
-  document.getElementById('guess').value = ''
-  document.getElementById('numberOfRemainingGuesses').innerHTML = --numberOfAvailableGuesses
-  checkGuess();
+function newGame() {
+  numberOfAvailableGuesses = DEFAULT_GUESSES
+  generatedRandomNumber = Math.floor(Math.random() * 100);
+  console.log("random " + generatedRandomNumber)
+  document.getElementById('numberOfRemainingGuesses').innerHTML = numberOfAvailableGuesses;
+  document.getElementById("guess-btn").disabled = false
+  document.getElementById("guess-btn").style.visibility = "visible"
+  document.getElementById('guessTooSmallError').style.visibility = 'visible'
+  document.getElementById('guessTooBigError').style.visibility = 'visible'
+  document.getElementById('correctGuess').style.visibility = 'visible'
+  document.getElementById("btn_new_game").style.visibility = "visible"
+  document.getElementById("game-over-div").style.visibility = "visible"
+  array = []
+  document.getElementById('array').innerHTML = "";
 }
 
 function checkGuess() {
   let guessValue = document.getElementById("guess").value
+  array.push(guessValue);
+  document.getElementById('array').innerHTML = array;
+
+  console.log("array" + array)
   console.log("guessvalue " + guessValue.toString() + "randomnumber" + generatedRandomNumber)
-  if (guessValue < generatedRandomNumber) {
-    document.getElementById('guessTooSmallError').style.visibility = 'visible'
-  }else if (guessValue > generatedRandomNumber) {
-    document.getElementById('guessTooBigError').style.visibility = 'visible'
-    console.log('big')
-  }else {
-    document.getElementById('correctGuess').style.visibility = 'visible'
-    newGame();
+  if (numberOfAvailableGuesses === 1 && guessValue !== generatedRandomNumber) {
+    updateUiGameOver()
+  } else {
+    if (guessValue < generatedRandomNumber) {
+      document.getElementById('guessTooSmallError').style.visibility = 'visible'
+      doSomething();
+    } else if (guessValue > generatedRandomNumber) {
+      document.getElementById('guessTooBigError').style.visibility = 'visible'
+      console.log('big')
+      doSomething();
+    } else {
+      updateUiWinner()
+    }
   }
 }
 
-function guessAgain() {
+function updateUiGameOver() {
+  document.getElementById('numberOfRemainingGuesses').innerHTML = 0
+  document.getElementById("game-over-div").style.visibility = "visible"
+  document.getElementById("guess-btn").disabled = true
+  document.getElementById("btn_new_game").style.visibility = "visible"
+
+}
+
+function updateUiWinner() {
+  document.getElementById("btn_new_game").style.visibility = "visible"
+  document.getElementById('correctGuess').style.visibility = 'visible'
+  document.getElementById("guess-btn").disabled = true
+}
+
+function doSomething() {
   document.getElementById('guess').value = ''
   document.getElementById('numberOfRemainingGuesses').innerHTML = --numberOfAvailableGuesses
-  if (numberOfAvailableGuesses === 0) {
-    console.log("heeeee")
-    document.getElementById("guessAgain-btn").style.visibility = "hidden"
-  checkGuess();
-  }
-}
-
-function newGame() {
-  numberOfAvailableGuesses = DEFAULT_GUESSES
-  document.getElementById('numberOfRemainingGuesses').innerHTML = numberOfAvailableGuesses;
-  document.getElementById("guess-btn").style.visibility = "visible"
-  document.getElementById('wrongGuess').style.visibility = 'hidden'
-  document.getElementById('correctGuess').style.visibility = 'hidden'
-  generatedRandomNumber = 0;
-}
-
-// function checkLives(numberOfRemainingGuesses) {
-//   if (numberOfRemainingGuesses === 0) {
-//     newGame();
-//   }
-// }
-
-function addElementToGuessLogArray () {
-  let guessHistoryArray = [];
-  for (var i = 0; i < 10; i++) {
-    numberOfAvailableGuesses -= 1;
-    guessHistoryArray.push(document.getElementById('guess').value = '')
-  }
+  console.log("doing something")
 }

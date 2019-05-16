@@ -1,8 +1,8 @@
 const DEFAULT_GUESSES = 10
 let numberOfAvailableGuesses = DEFAULT_GUESSES
 document.getElementById("numberOfRemainingGuesses").innerHTML = numberOfAvailableGuesses;
-let generatedRandomNumber
-let array = []
+let generatedRandomNumber, lastGuessValue
+let guessHistory = []
 
 newGame()
 
@@ -19,25 +19,43 @@ function newGame() {
   document.getElementById('correctGuess').style.visibility = 'hidden'
   document.getElementById("btn_new_game").style.visibility = "hidden"
   document.getElementById("game-over-div").style.visibility = "hidden"
-  array = []
-  document.getElementById('array').innerHTML = "";
+  guessHistory = []
+  document.getElementById('guess').value = ''
 }
 
 function checkGuess() {
   let guessValue = document.getElementById("guess").value
-  array.push(guessValue);
-  document.getElementById('array').innerHTML = array;
+
+  // if (guessValue === lastGuessValue) {
+  //   alert()
+  // }
   console.log("guessvalue " + guessValue.toString() + " randomnumber " + generatedRandomNumber)
+  // for (var i = 0; i < guessHistory.length; i ++) {
+  //   if (guessHistory[i] === guessValue) {
+  //     alert ("You did it before smartass!")
+  //   }
+  // }
+  // array.indexof kiem tra phan tu da co trong array hay chua, xet indexof < 0 ====== phan tu moi
+  // if(guessHistory.indexOf(guessValue) < 0) {
+  //   alert("You did guess the same before!")
+  // }
+  // array.includes ???
+ 
+  if (guessHistory.includes(guessValue)) {
+    alert("Pick another number")
+    return;
+  }
+  guessHistory.push(guessValue);
+  document.getElementById('array').innerHTML = guessHistory;
   if (numberOfAvailableGuesses === 1 && guessValue !== generatedRandomNumber) {
     updateUiGameOver()
   } else {
     if (guessValue < generatedRandomNumber) {
       document.getElementById('guessTooSmallError').style.visibility = 'visible'
-      updateUiForOneTurn();
+      updateUiForEachTurn();
     } else if (guessValue > generatedRandomNumber) {
       document.getElementById('guessTooBigError').style.visibility = 'visible'
-      console.log('big')
-      updateUiForOneTurn();
+      updateUiForEachTurn();
     } else {
       updateUiWinner()
     }
@@ -60,12 +78,11 @@ function updateUiWinner() {
   document.getElementById("guess-btn").disabled = true
 }
 
-function updateUiForOneTurn() {
+function updateUiForEachTurn() {
   document.getElementById('guess').value = ''
   document.getElementById('numberOfRemainingGuesses').innerHTML = --numberOfAvailableGuesses
-  console.log("doing something")
 }
 
-function updateUiDuplicateGuess() {
-return guessValue
-}
+// function updateUiDuplicateGuess() {
+// return guessValue
+// }

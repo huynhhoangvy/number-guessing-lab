@@ -23,7 +23,7 @@
       <div class="row">
         <div class=col-6>
           <div class="container d-flex justify-content-center">
-            <input type="text" id="guess" />
+            <input type="number" id="guess" />
             <button onclick="checkGuess()" id="guess-btn">
               Guess!
             </button>
@@ -53,11 +53,12 @@
         <div class="col-6">
           <div>
             <h1 id="round" style="display: inline">ROUND: </h1>
-            <h1 style="display: inline" id="number"></h1>
+            <h1 style="display: inline" id="roundNumber"></h1>
             <h1>Remaining turns:</h1>
             <h1 id="numberOfRemainingGuesses"></h1>
             <!-- <h1>Elapsed time</h1> -->
             <h1 id="elapsedTime"></h1>
+            <h1 id="secondsToTimeOut"></h1>
           </div>
           <div class="container">
             <div class="row">

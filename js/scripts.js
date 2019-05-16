@@ -4,9 +4,11 @@ document.getElementById("numberOfRemainingGuesses").innerHTML = numberOfAvailabl
 let generatedRandomNumber, lastGuessValue
 let guessHistory = []
 let previousRoundsGuessHistory = []
-let number = 0
+let roundNumber = 0
 let bestResult = []
-let second = 0;
+let second = 0
+let secondsToTimeout = 30
+let callSetInterval, callTimeOut, callCountTimeLeft
 
 newGame()
 
@@ -28,9 +30,14 @@ function newGame() {
 
   guessHistory = []
   document.getElementById("guessHistory").innerHTML = guessHistory
-  number += 1
-  document.getElementById("number").innerHTML = number
-  countDown()
+  roundNumber += 1
+  document.getElementById("roundNumber").innerHTML = roundNumber
+  // resetCountTime()
+  // countTime()
+  resetCountTimeLeft()
+  countTimeLeft()
+  resetTimeOut()
+  timeOut()
 }
 
 function checkGuess() {
@@ -41,7 +48,13 @@ if (guessHistory.includes(guessValue)) {
   alert("Pick another number")
   return;
 }
-countDown()
+// resetCountTime()
+// countTime()
+resetCountTimeLeft()
+countTimeLeft()
+resetTimeOut()
+timeOut()
+
 
 
   guessHistory.push(guessValue);
@@ -51,12 +64,18 @@ countDown()
   
   if (numberOfAvailableGuesses === 1 && guessValue !== generatedRandomNumber) {
     updateUiGameOver()
+    // resetCountTime()
+    resetCountTimeLeft()
   } else {
     if (guessValue < generatedRandomNumber) {
       document.getElementById("guessTooSmallError").style.visibility = "visible"
+      document.getElementById("guessTooBigError").style.visibility = "hidden"
+
       updateUiForEachTurn();
     } else if (guessValue > generatedRandomNumber) {
       document.getElementById("guessTooBigError").style.visibility = "visible"
+      document.getElementById("guessTooSmallError").style.visibility = "hidden"
+
       updateUiForEachTurn();
     } else {
       updateBestResult()
@@ -65,15 +84,62 @@ countDown()
   }
 }
 
-function countDown() {
-  second = 0
-  setInterval(incrementSections, 1000)
+// function countTime() {
+//   second = 0
+//   callSetInterval = setInterval(incrementSeconds, 1000)
+// }
+
+// function resetCountTime() {
+//   second = 0
+//   clearInterval(callSetInterval)
+//   document.getElementById("elapsedTime").innerHTML = "Elapsed time: " + second + " seconds."
+// }
+
+// function incrementSeconds() {
+//   second += 1
+//   document.getElementById("elapsedTime").innerHTML = "Elapsed time: " + second + " seconds."
+// }
+
+
+
+function countTimeLeft() {
+  secondsToTimeout = 30
+  callCountTimeLeft = setInterval(decrementSecond, 1000)
 }
 
-function incrementSections() {
-  second += 1
-  document.getElementById("elapsedTime").innerHTML = "Elapsed time: " + second + " seconds."
+function resetCountTimeLeft() {
+  secondsToTimeout = 0
+  clearInterval(callCountTimeLeft)
+  document.getElementById("secondsToTimeOut").innerHTML = "You have " + secondsToTimeout + " seconds left."
 }
+
+function decrementSecond() {
+  secondsToTimeout -= 1
+  document.getElementById("secondsToTimeOut").innerHTML = "You have " + secondsToTimeout + " seconds left."
+  console.log("decrementsecond works")
+}
+
+
+
+
+function timeOut() {
+  callTimeOut = setTimeout(timeOutAction, 30000)
+}
+
+function resetTimeOut() {
+  secondsToTimeout = 30
+  clearTimeout(callTimeOut)
+  document.getElementById("secondsToTimeOut").innerHTML = "You have " + secondsToTimeout + " seconds left."
+}
+
+function timeOutAction() {
+  updateUiForEachTurn()
+  alert("Time out! You lose your current turn.")
+  console.log("alerttimeout works")
+}
+
+
+
 
 function updateBestResult() {
   bestResult.push(DEFAULT_GUESSES - numberOfAvailableGuesses + 1)
@@ -95,9 +161,15 @@ function updateUiWinner() {
   document.getElementById("correctGuess").style.visibility = "visible"
   document.getElementById("guess").disabled = true
   document.getElementById("guess-btn").disabled = true
+  resetTimeOut()
+  resetCountTimeLeft()
 }
 
 function updateUiForEachTurn() {
   document.getElementById("guess").value = ""
   document.getElementById("numberOfRemainingGuesses").innerHTML = --numberOfAvailableGuesses
+  resetCountTimeLeft()
+  countTimeLeft()
+  resetTimeOut()
+  timeOut()
 }

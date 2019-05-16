@@ -24,9 +24,7 @@ The following **optional** features are implemented:
 * [ ] The user can see how long it took to finish each round in seconds.
 * [ ] The user is limited to 30 seconds per guess. If the user does not guess within the allotted time, the turn is lost. 
 
-The following **additional** features are implemented:
-
-* [x] Add a New Game button to reset the UI for a new game.
+<!-- The following **additional** features are implemented: -->
 
 ## Time Spent and Lessons Learned
 

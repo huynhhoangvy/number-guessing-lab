@@ -9,6 +9,8 @@ let bestResult = []
 let second = 0
 let secondsToTimeout = 30
 let callSetInterval, callTimeOut, callCountTimeLeft
+let timeToFinishRound = []
+let totalTime = 0
 
 newGame()
 
@@ -27,13 +29,10 @@ function newGame() {
   document.getElementById("game-over-div").style.visibility = "hidden"
   document.getElementById("guess").value = ""
   document.getElementById("bestResult").innerHTML = bestResult
-
   guessHistory = []
   document.getElementById("guessHistory").innerHTML = guessHistory
   roundNumber += 1
   document.getElementById("roundNumber").innerHTML = roundNumber
-  // resetCountTime()
-  // countTime()
   resetCountTimeLeft()
   countTimeLeft()
   resetTimeOut()
@@ -43,29 +42,22 @@ function newGame() {
 function checkGuess() {
   let guessValue = document.getElementById("guess").value
   console.log("guessvalue " + guessValue.toString() + " randomnumber " + generatedRandomNumber)
- 
-if (guessHistory.includes(guessValue)) {
-  alert("Pick another number")
-  return;
-}
-// resetCountTime()
-// countTime()
-resetCountTimeLeft()
-countTimeLeft()
-resetTimeOut()
-timeOut()
 
-
+  if (guessHistory.includes(guessValue)) {
+    alert("Pick another number")
+    return;
+  }
 
   guessHistory.push(guessValue);
   document.getElementById("guessHistory").innerHTML = guessHistory;
   previousRoundsGuessHistory.push(guessValue)
   document.getElementById("previousRoundsGuessHistory").innerHTML = previousRoundsGuessHistory
-  
+
   if (numberOfAvailableGuesses === 1 && guessValue !== generatedRandomNumber) {
     updateUiGameOver()
-    // resetCountTime()
     resetCountTimeLeft()
+    resetTimeOut()
+
   } else {
     if (guessValue < generatedRandomNumber) {
       document.getElementById("guessTooSmallError").style.visibility = "visible"
@@ -80,27 +72,14 @@ timeOut()
     } else {
       updateBestResult()
       updateUiWinner()
+      return
     }
   }
+  resetCountTimeLeft()
+  countTimeLeft()
+  resetTimeOut()
+  timeOut()
 }
-
-// function countTime() {
-//   second = 0
-//   callSetInterval = setInterval(incrementSeconds, 1000)
-// }
-
-// function resetCountTime() {
-//   second = 0
-//   clearInterval(callSetInterval)
-//   document.getElementById("elapsedTime").innerHTML = "Elapsed time: " + second + " seconds."
-// }
-
-// function incrementSeconds() {
-//   second += 1
-//   document.getElementById("elapsedTime").innerHTML = "Elapsed time: " + second + " seconds."
-// }
-
-
 
 function countTimeLeft() {
   secondsToTimeout = 30
@@ -116,11 +95,7 @@ function resetCountTimeLeft() {
 function decrementSecond() {
   secondsToTimeout -= 1
   document.getElementById("secondsToTimeOut").innerHTML = "You have " + secondsToTimeout + " seconds left."
-  console.log("decrementsecond works")
 }
-
-
-
 
 function timeOut() {
   callTimeOut = setTimeout(timeOutAction, 30000)
@@ -134,16 +109,12 @@ function resetTimeOut() {
 
 function timeOutAction() {
   updateUiForEachTurn()
+  document.getElementById("secondsToTimeOut").innerHTML = "You have " + secondsToTimeout + " seconds left."
   alert("Time out! You lose your current turn.")
-  console.log("alerttimeout works")
 }
-
-
-
 
 function updateBestResult() {
   bestResult.push(DEFAULT_GUESSES - numberOfAvailableGuesses + 1)
-  // bestResult.push(guessValue)
   document.getElementById("bestResult").innerHTML = bestResult
 }
 
@@ -153,21 +124,31 @@ function updateUiGameOver() {
   document.getElementById("guess-btn").disabled = true
   document.getElementById("guess").disabled = true
   document.getElementById("btn_new_game").style.visibility = "visible"
-
 }
 
 function updateUiWinner() {
   document.getElementById("btn_new_game").style.visibility = "visible"
   document.getElementById("correctGuess").style.visibility = "visible"
+  document.getElementById("guessTooBigError").style.visibility = "hidden"
+  document.getElementById("guessTooSmallError").style.visibility = "hidden"
   document.getElementById("guess").disabled = true
   document.getElementById("guess-btn").disabled = true
+  timeToFinishRound.push(30 - secondsToTimeout)
+  for (var i = 0; i < timeToFinishRound.length; i++) {
+   totalTime += timeToFinishRound[i]
+  }
+
+  document.getElementById("totalTime").innerHTML = "You completed this round in " + totalTime + " seconds"
   resetTimeOut()
   resetCountTimeLeft()
+  
+
 }
 
 function updateUiForEachTurn() {
   document.getElementById("guess").value = ""
   document.getElementById("numberOfRemainingGuesses").innerHTML = --numberOfAvailableGuesses
+  timeToFinishRound.push(30 - secondsToTimeout)
   resetCountTimeLeft()
   countTimeLeft()
   resetTimeOut()

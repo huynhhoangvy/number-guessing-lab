@@ -15,11 +15,13 @@
 
 </head>
 
-<body class="bg mt-5 pt-5" style="background-image: url(img/1.jpeg); height: 100%; background-position: center; background-repeat: no-repeat;background-size: cover;">
-  <section class="container pt-3" style="background-color: black; opacity: 0.9; background: white; border-radius: 15px;">
+<body class="bg mt-5 pt-5"
+  style="background-image: url(img/1.jpeg); height: 100%; background-position: center; background-repeat: no-repeat;background-size: cover;">
+  <section class="container pt-3"
+    style="background-color: black; opacity: 0.9; background: white; border-radius: 15px;">
     <div class="container">
       <div class="row">
-        <div class=col-8>
+        <div class=col-6>
           <div class="container d-flex justify-content-center">
             <input type="text" id="guess" />
             <button onclick="checkGuess()" id="guess-btn">
@@ -30,34 +32,56 @@
             </button>
           </div>
           <div class="container messages">
-            <div class="alert alert-danger d-flex justify-content-center" role="alert" style="visibility: hidden" id="guessTooSmallError">
+            <div class="alert alert-danger d-flex justify-content-center" role="alert" style="visibility: hidden"
+              id="guessTooSmallError">
               What a noob! Your guess is too small!
             </div>
-            <div class="alert alert-danger d-flex justify-content-center" role="alert" style="visibility: hidden" id="guessTooBigError">
+            <div class="alert alert-danger d-flex justify-content-center" role="alert" style="visibility: hidden"
+              id="guessTooBigError">
               What a noob! Your guess is too big!
             </div>
-            <div class="alert alert-success d-flex justify-content-center" role="alert" style="visibility: hidden" id="correctGuess">
+            <div class="alert alert-success d-flex justify-content-center" role="alert" style="visibility: hidden"
+              id="correctGuess">
               Finally! You guessed correctly!
             </div>
-            <div class="alert alert-danger d-flex justify-content-center" role="alert" style="visibility: hidden" id="game-over-div">
+            <div class="alert alert-danger d-flex justify-content-center" role="alert" style="visibility: hidden"
+              id="game-over-div">
               YOU BETTER QUIT
             </div>
           </div>
         </div>
-        <div class="col-4">
+        <div class="col-6">
           <div>
+            <h1 id="round" style="display: inline">ROUND: </h1>
+            <h1 style="display: inline" id="number"></h1>
             <h1>Remaining turns:</h1>
             <h1 id="numberOfRemainingGuesses"></h1>
+            <!-- <h1>Elapsed time</h1> -->
+            <h1 id="elapsedTime"></h1>
           </div>
-          <h2>Your guess history:</h2>
-          <div >
-            <h2 id="array">
-
-            </h2>
-
+          <div class="container">
+            <div class="row">
+              <h3>Current round history:</h3>
+            </div>
+            <div class="row">
+              <h2 id="guessHistory"></h2>
+            </div>
+            <div class="row">
+              <h3>Best result:</h3>
+            </div>
+            <div class="row">
+              <h3 id="bestResult"></h3>
+            </div>
+            <div class="row">
+              <h3>Previous rounds history:</h3>
+            </div>
+            <div class="row">
+              <h2 id="previousRoundsGuessHistory"></h2>
+            </div>
           </div>
         </div>
       </div>
+    </div>
     </div>
   </section>
   <script src="js/scripts.js"></script>

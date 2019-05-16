@@ -33,11 +33,11 @@ function checkGuess() {
   } else {
     if (guessValue < generatedRandomNumber) {
       document.getElementById('guessTooSmallError').style.visibility = 'visible'
-      doSomething();
+      updateUiForOneTurn();
     } else if (guessValue > generatedRandomNumber) {
       document.getElementById('guessTooBigError').style.visibility = 'visible'
       console.log('big')
-      doSomething();
+      updateUiForOneTurn();
     } else {
       updateUiWinner()
     }
@@ -60,8 +60,12 @@ function updateUiWinner() {
   document.getElementById("guess-btn").disabled = true
 }
 
-function doSomething() {
+function updateUiForOneTurn() {
   document.getElementById('guess').value = ''
   document.getElementById('numberOfRemainingGuesses').innerHTML = --numberOfAvailableGuesses
   console.log("doing something")
+}
+
+function updateUiDuplicateGuess() {
+return guessValue
 }
